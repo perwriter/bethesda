@@ -5,7 +5,7 @@ export default function CTAButton({ data }) {
     <>
       {data && (
         <>
-          <section className="container mx-auto px-4 bg-green-500 text-white py-8">
+          <section className="container mx-auto px-4 bg-secondary text-white py-8">
             <div className="mx-auto max-w-[700px] text-center">
               <h2 className="text-center block my-8 text-3xl font-bold">
                 {data?.heading}

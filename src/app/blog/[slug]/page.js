@@ -26,7 +26,7 @@ export default function Blogdetail({ params }) {
             <div className="pb-4">
               <Link
                 href={`/`}
-                className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-green-600"
+                className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary"
               >
                 <span
                   aria-hidden="true"

@@ -8,8 +8,8 @@ const NavItem = ({ href, children, isPrimary }) => (
       href={href}
       className={`block rounded-md px-5 py-2.5 text-sm font-medium transition ${
         isPrimary
-          ? "bg-green-600 text-white hover:bg-green-700"
-          : "text-black hover:bg-green-700"
+          ? "bg-primary text-white hover:bg-primary"
+          : "text-black hover:bg-primary"
       }`}
     >
       {children}
@@ -27,7 +27,7 @@ export default function Navbar() {
   return (
     <header className="bg-white ">
       <div className=" px-8 mx-auto  flex h-20  w-full items-center">
-        <a className="block text-green-600" href="/">
+        <a className="block text-primary" href="/">
           <img src="../logo1.png" className="w-16 h-auto" alt="logo" />
         </a>
 

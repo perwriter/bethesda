@@ -5,3 +5,30 @@
 p {
   padding: 10px 0px;
 }
+/* Make the scrollbar thinner in WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the vertical scrollbar */
+  height: 8px; /* Height of the horizontal scrollbar */
+}
+
+/* Track (the background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light background */
+}
+
+/* Handle (the scrolling part) */
+::-webkit-scrollbar-thumb {
+  background: #6a0dad; /* Darker thumb */
+  border-radius: 10px; /* Rounded corners */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #6a0dad; /* Darker thumb on hover */
+}
+
+/* Scrollbar styling for Firefox */
+* {
+  scrollbar-width: thin; /* Make scrollbar thinner in Firefox */
+  scrollbar-color: #6a0dad #f1f1f1; /* thumb color and track color */
+}

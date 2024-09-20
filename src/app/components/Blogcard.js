@@ -26,7 +26,7 @@ export default function blogCard({
           </p>
           <Link
             href={`/blog/${slug}`}
-            className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-green-600"
+            className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary"
           >
             {ctaText}
             <span
