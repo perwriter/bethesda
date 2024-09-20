@@ -16,16 +16,21 @@ export default function Contact() {
     const timeoutId = setTimeout(() => {
       setSubmitted(false);
     }, 3000);
-    // Clean up the timeout to avoid memory leaks when the component unmounts or changes
     return () => {
       clearTimeout(timeoutId);
     };
   }, [submitted]);
 
-  const handelSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await submitContactForm(formValue);
+      // Sanitize phone number: remove any non-numeric characters (e.g., +, spaces)
+      const sanitizedFormValue = {
+        ...formValue,
+        phone: formValue.phone.replace(/\D/g, ""), // Keep only numbers
+      };
+
+      const res = await submitContactForm(sanitizedFormValue);
       setFormValue({
         firstname: "",
         lastname: "",
@@ -35,11 +40,11 @@ export default function Contact() {
       setSubmitted(true);
       return res;
     } catch (e) {
-      console.log("error occured");
+      console.log("Error occurred:", e);
     }
   };
 
-  const handelChange = (e) => {
+  const handleChange = (e) => {
     setFormValue({
       ...formValue,
       [e.target.name]: e.target.value,
@@ -48,13 +53,12 @@ export default function Contact() {
 
   return (
     <>
-      {/* firstname, lastname, email, phone */}
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px]">
-          <form method="POST">
+          <form method="POST" onSubmit={handleSubmit}>
             <div className="mb-5">
               <label
-                htmlFor="name"
+                htmlFor="firstname"
                 className="mb-3 block text-base font-medium text-primary"
               >
                 First name
@@ -65,13 +69,13 @@ export default function Contact() {
                 id="firstname"
                 placeholder="First Name"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base"
-                onChange={handelChange}
+                onChange={handleChange}
                 value={formValue.firstname || ""}
               />
             </div>
             <div className="mb-5">
               <label
-                htmlFor="name"
+                htmlFor="lastname"
                 className="mb-3 block text-base font-medium text-primary"
               >
                 Last name
@@ -82,7 +86,7 @@ export default function Contact() {
                 id="lastname"
                 placeholder="Last Name"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base"
-                onChange={handelChange}
+                onChange={handleChange}
                 value={formValue.lastname || ""}
               />
             </div>
@@ -99,7 +103,7 @@ export default function Contact() {
                 id="email"
                 placeholder="example@email.com"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base"
-                onChange={handelChange}
+                onChange={handleChange}
                 value={formValue.email || ""}
               />
             </div>
@@ -111,17 +115,18 @@ export default function Contact() {
                 Phone
               </label>
               <input
-                type="number"
+                type="text"
                 name="phone"
+                id="phone"
                 placeholder="+1524528831"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base"
-                onChange={handelChange}
+                onChange={handleChange}
                 value={formValue.phone || ""}
               />
             </div>
             <div>
               <button
-                onClick={(e) => handelSubmit(e)}
+                type="submit"
                 className="block rounded-md bg-green-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-green-700"
               >
                 Submit
@@ -130,7 +135,7 @@ export default function Contact() {
           </form>
           {submitted && (
             <div className="bg-green-600 text-white p-2 my-4 rounded-md">
-              Form submitted sucessfully!
+              Form submitted successfully!
             </div>
           )}
         </div>

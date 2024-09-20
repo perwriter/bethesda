@@ -86,18 +86,42 @@ export const getSingleBlog = async (slug) => {
 
 export const submitContactForm = async (formValue) => {
   const mutationQuery = gql`
-    mutation Contact {
+    mutation CreateContact($firstname: String!, $lastname: String!, $email: String!, $phone: Float!) {
       createContact(
-        data: { firstname: "${formValue.firstname}", phone: ${formValue.phone}, lastname: "${formValue.lastname}", email: "${formValue.email}" }
+        data: { firstname: $firstname, lastname: $lastname, email: $email, phone: $phone }
       ) {
         id
       }
     }
   `;
 
-  const response = await graphQLClient.request(mutationQuery);
+  // Remove non-numeric characters from the phone number and convert to float
+  const sanitizedPhone = parseFloat(formValue.phone.replace(/\D/g, ''));
+
+  const variables = {
+    firstname: formValue.firstname,
+    lastname: formValue.lastname,
+    email: formValue.email,
+    phone: sanitizedPhone, // Phone should be a float
+  };
+
+  const response = await graphQLClient.request(mutationQuery, variables);
   return response;
 };
+// export const submitContactForm = async (formValue) => {
+//   const mutationQuery = gql`
+//     mutation Contact {
+//       createContact(
+//         data: { firstname: "${formValue.firstname}", phone: ${formValue.phone}, lastname: "${formValue.lastname}", email: "${formValue.email}" }
+//       ) {
+//         id
+//       }
+//     }
+//   `;
+
+//   const response = await graphQLClient.request(mutationQuery);
+//   return response;
+// };
 
 // New function for fetching histories
 export const queryHistories = async () => {
