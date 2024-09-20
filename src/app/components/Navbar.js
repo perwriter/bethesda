@@ -1,8 +1,8 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { useState } from "react";
 
-const NavItem = ({ href, children, isPrimary }) => (
+const NavItem = ({ href, children, isPrimary, onClick }) => (
   <li>
     <Link
       href={href}
@@ -11,6 +11,7 @@ const NavItem = ({ href, children, isPrimary }) => (
           ? "bg-primary text-white hover:bg-primary"
           : "text-black hover:bg-primary"
       }`}
+      onClick={onClick} // Attach the onClick handler here
     >
       {children}
     </Link>
@@ -24,9 +25,13 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false); // Function to close the menu
+  };
+
   return (
-    <header className="bg-white ">
-      <div className=" px-8 mx-auto  flex h-20  w-full items-center">
+    <header className="bg-white">
+      <div className="px-8 mx-auto flex h-20 w-full items-center">
         <a className="block text-primary" href="/">
           <img src="../logo1.png" className="w-16 h-auto" alt="logo" />
         </a>
@@ -38,7 +43,9 @@ export default function Navbar() {
               <NavItem href="/donation">Donation</NavItem>
               <NavItem href="/history">History</NavItem>
               <NavItem href="/gallery">Gallery</NavItem>
-              <NavItem href="/contact" isPrimary>Contact</NavItem>
+              <NavItem href="/contact" isPrimary>
+                Contact
+              </NavItem>
             </ul>
           </nav>
 
@@ -68,15 +75,18 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="fixed inset-0 bg-white z-50 flex flex-col justify-center items-center md:hidden h-3/4">
-          <button className="absolute top-4 right-4 text-gray-600" onClick={toggleMenu}>
+          <button
+            className="absolute top-4 right-4 text-gray-600"
+            onClick={toggleMenu}
+          >
             &times;
           </button>
           <ul className="flex flex-col items-center gap-6 text-lg">
-            <NavItem href="/" onClick={toggleMenu}>Home</NavItem>
-            <NavItem href="/donation" onClick={toggleMenu}>Donation</NavItem>
-            <NavItem href="/history" onClick={toggleMenu}>History</NavItem>
-            <NavItem href="/gallery" onClick={toggleMenu}>Gallery</NavItem>
-            <NavItem href="/contact" isPrimary onClick={toggleMenu}>Contact</NavItem>
+            <NavItem href="/" onClick={closeMenu}>Home</NavItem>
+            <NavItem href="/donation" onClick={closeMenu}>Donation</NavItem>
+            <NavItem href="/history" onClick={closeMenu}>History</NavItem>
+            <NavItem href="/gallery" onClick={closeMenu}>Gallery</NavItem>
+            <NavItem href="/contact" isPrimary onClick={closeMenu}>Contact</NavItem>
           </ul>
         </div>
       )}
