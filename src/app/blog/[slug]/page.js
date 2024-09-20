@@ -20,9 +20,10 @@ export default function Blogdetail({ params }) {
 
   return (
     <>
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8">
         {blogDetail && (
           <div className="max-w-[800px] mx-auto py-10">
+            {/* Back Link */}
             <div className="pb-4">
               <Link
                 href={`/`}
@@ -37,21 +38,31 @@ export default function Blogdetail({ params }) {
                 Take me back
               </Link>
             </div>
-            <h1 className="text-left block my-4 text-3xl font-bold">
+
+            {/* Blog Title */}
+            <h1 className="text-left my-4 text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-gray-800">
               {blogDetail?.bloglist.heading}
             </h1>
-            <p className="mb-4 text-lg  text-gray-500">
+
+            {/* Subdescription */}
+            <p className="mb-4 text-md sm:text-lg text-gray-500">
               {blogDetail?.bloglist.subdescription}
             </p>
-            <Image
-              alt="Office"
-              src={blogDetail?.bloglist?.bannerimage?.url}
-              width="400"
-              height="400"
-              className="w-full object-cover"
-            />
-            <br />
+
+            {/* Blog Image */}
+            <div className="relative w-full h-64 sm:h-96 mb-6">
+              <Image
+                alt="Office"
+                src={blogDetail?.bloglist?.bannerimage?.url}
+                layout="fill"
+                objectFit="cover"
+                className="rounded-md"
+              />
+            </div>
+
+            {/* Blog Content */}
             <div
+              className="prose prose-sm sm:prose lg:prose-lg mx-auto text-gray-800"
               dangerouslySetInnerHTML={{
                 __html: `${blogDetail?.bloglist?.fulldescription.html}`,
               }}
