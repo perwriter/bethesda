@@ -1,5 +1,6 @@
 import { FaFacebookF, FaYoutube, FaTwitter, FaInstagram } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -9,12 +10,20 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row items-center justify-between">
           {/* Logo */}
           <div className="mb-6 lg:mb-0 lg:w-1/4 flex justify-center lg:justify-start">
-            <img src="../logo1.png" className="w-20 h-auto" alt="logo" />
+            <Link href="/">
+              <Image
+                src="/logo1.png"
+                width={80}
+                height={80}
+                alt="Bethesda Childcare Logo"
+                className="h-auto"
+              />
+            </Link>
           </div>
 
           {/* Menu Links */}
-          <div className="lg:w-1/4  justify-start flex items-start  text-center lg:text-start mt-6 lg:mt-0">
-          <ul className="flex flex-col justify-center lg:justify-start space-y-4">
+          <div className="lg:w-1/4 justify-start flex items-start text-center lg:text-start mt-6 lg:mt-0">
+            <ul className="flex flex-col justify-center lg:justify-start space-y-4">
               {[
                 { name: "Home", href: "/" },
                 { name: "Donation", href: "/donation" },
@@ -39,13 +48,16 @@ export default function Footer() {
               <strong>Address:</strong> Ndunduri, Nakuru, Kenya
             </p>
             <p className="text-sm text-gray-700">
-              <strong>Email:</strong> bethesdachildcarekenya@gmail.com
+              <strong>Email:</strong>{" "}
+              <Link href="mailto:bethesdachildcarekenya@gmail.com" className="hover:text-blue-600">
+                bethesdachildcarekenya@gmail.com
+              </Link>
             </p>
             <p className="text-sm text-gray-700">
-              <strong>Contact:</strong> +254720224464
+              <strong>Contact:</strong> <Link href="tel:+254720224464" className="hover:text-blue-600">+254720224464</Link>
             </p>
             <p className="text-sm text-gray-700">
-              <strong>Contact:</strong> +254721201092
+              <strong>Contact:</strong> <Link href="tel:+254721201092" className="hover:text-blue-600">+254721201092</Link>
             </p>
           </div>
 
@@ -96,7 +108,7 @@ export default function Footer() {
         {/* Footer Bottom Content */}
         <div className="mt-8 border-t border-gray-300 pt-4 text-center">
           <p className="text-sm text-gray-500">
-            Copyright &copy; 2023. All rights reserved.
+            Copyright &copy; {new Date().getFullYear()}. All rights reserved.
           </p>
         </div>
       </div>

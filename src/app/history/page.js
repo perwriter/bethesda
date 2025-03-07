@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-// import { queryHistories } from '@/app/api';
+import Image from "next/image";
 import { queryHistories } from "@/app/services/index";
 
 export default function HistoryPage() {
@@ -34,7 +34,7 @@ export default function HistoryPage() {
         <div className="hidden md:block absolute left-1/2 border-l pr-4 border-purple-300 h-full"></div>
 
         {timelineData.map((event, index) => {
-          const imageSrc = event.himage?.url || "../logo1.png";
+          const imageSrc = event.himage?.url || "/logo1.png";
 
           return (
             <div
@@ -51,15 +51,19 @@ export default function HistoryPage() {
                 <h2 className="text-2xl font-semibold mb-2">{event.year}</h2>
               </div>
               <div className="md:w-1/2 flex justify-center">
-                <img
-                  src={imageSrc}
-                  alt={`Event in ${event.year}`}
-                  className="hidden md:block w-40 h-auto rounded-lg z-40 mx-4"
-                />
+                <div className="relative w-40 h-40">
+                  <Image
+                    src={imageSrc}
+                    alt={`Event in ${event.year}`}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg"
+                  />
+                </div>
               </div>
               <div
                 className={`md:w-1/4 text-start ${
-                  index % 0 === 0 ? "md:pl-" : "md:pr-"
+                  index % 2 === 0 ? "md:pl-4" : "md:pr-4"
                 }`}
               >
                 <p className="text-lg mb-4">{event.description}</p>

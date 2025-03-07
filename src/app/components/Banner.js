@@ -3,7 +3,6 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Banner({ data = [] }) {
-  if (!data.length) return null; // Ensure data is available before rendering
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -36,6 +35,7 @@ export default function Banner({ data = [] }) {
   const goToPrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? data.length - 1 : prevIndex - 1));
   };
+  if (!data.length) return null; // Ensure data is available before rendering
 
   return (
     <section
