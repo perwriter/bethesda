@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const NavItem = ({ href, children, isPrimary, onClick }) => (
   <li>
@@ -20,20 +20,36 @@ const NavItem = ({ href, children, isPrimary, onClick }) => (
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50); // Add shadow when scrolling past 50px
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const closeMenu = () => {
-    setIsMenuOpen(false); // Function to close the menu
+    setIsMenuOpen(false);
   };
 
   return (
-    <header className="bg-white">
+    <header
+      className={`fixed w-full z-40 transition-shadow ${
+        isScrolled
+          ? "shadow-xl shadow-white bg-white"
+          : " bg-zinc-200/80  "
+      }`}
+    >
       <div className="px-8 mx-auto flex h-20 w-full items-center">
         <a className="block text-primary" href="/">
-          <img src="../logo1.png" className="w-16 h-auto" alt="logo" />
+          <img src="../logo1.png" className="w-24 h-auto" alt="logo" />
         </a>
 
         <div className="flex flex-1 items-center justify-end md:justify-end">
@@ -82,11 +98,21 @@ export default function Navbar() {
             &times;
           </button>
           <ul className="flex flex-col items-center gap-6 text-lg">
-            <NavItem href="/" onClick={closeMenu}>Home</NavItem>
-            <NavItem href="/donation" onClick={closeMenu}>Donation</NavItem>
-            <NavItem href="/history" onClick={closeMenu}>History</NavItem>
-            <NavItem href="/gallery" onClick={closeMenu}>Gallery</NavItem>
-            <NavItem href="/contact" isPrimary onClick={closeMenu}>Contact</NavItem>
+            <NavItem href="/" onClick={closeMenu}>
+              Home
+            </NavItem>
+            <NavItem href="/donation" onClick={closeMenu}>
+              Donation
+            </NavItem>
+            <NavItem href="/history" onClick={closeMenu}>
+              History
+            </NavItem>
+            <NavItem href="/gallery" onClick={closeMenu}>
+              Gallery
+            </NavItem>
+            <NavItem href="/contact" isPrimary onClick={closeMenu}>
+              Contact
+            </NavItem>
           </ul>
         </div>
       )}
