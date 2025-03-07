@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { submitContactForm } from "@/app/services/index";
+import { Mail, Phone, MapPin, Loader2 } from "lucide-react";
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formValue, setFormValue] = useState({
     firstname: "",
     lastname: "",
@@ -12,134 +14,100 @@ export default function Contact() {
     phone: "",
   });
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setSubmitted(false);
-    }, 3000);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [submitted]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      // Sanitize phone number: remove any non-numeric characters (e.g., +, spaces)
-      const sanitizedFormValue = {
-        ...formValue,
-        phone: formValue.phone.replace(/\D/g, ""), // Keep only numbers
-      };
-
-      const res = await submitContactForm(sanitizedFormValue);
-      setFormValue({
-        firstname: "",
-        lastname: "",
-        email: "",
-        phone: "",
-      });
+      await submitContactForm(formValue);
+      setFormValue({ firstname: "", lastname: "", email: "", phone: "" });
       setSubmitted(true);
-      return res;
-    } catch (e) {
-      console.log("Error occurred:", e);
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChange = (e) => {
-    setFormValue({
-      ...formValue,
-      [e.target.name]: e.target.value,
-    });
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
 
   return (
-    <>
-      <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[550px]">
-          <form method="POST" onSubmit={handleSubmit}>
-            <div className="mb-5">
-              <label
-                htmlFor="firstname"
-                className="mb-3 block text-base font-medium text-primary"
-              >
-                First name
-              </label>
-              <input
-                type="text"
-                name="firstname"
-                id="firstname"
-                placeholder="First Name"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base"
-                onChange={handleChange}
-                value={formValue.firstname || ""}
-              />
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 text-black p-8">
+      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Left Side - Contact Info */}
+        <div>
+          <h2 className="text-3xl font-bold mb-4">Get in Touch</h2>
+          <p className="mb-6">Have questions? We're here to help. Reach out to our team for support or inquiries.</p>
+          <div className="space-y-8">
+            <div className="flex items-center gap-3">
+              <Mail className="text-primary" />
+              <span> bethesdachildcarekenya@gmail.com</span>
             </div>
-            <div className="mb-5">
-              <label
-                htmlFor="lastname"
-                className="mb-3 block text-base font-medium text-primary"
-              >
-                Last name
-              </label>
-              <input
-                type="text"
-                name="lastname"
-                id="lastname"
-                placeholder="Last Name"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base"
-                onChange={handleChange}
-                value={formValue.lastname || ""}
-              />
+            <div className="flex items-center gap-3">
+              <Phone className="text-primary" />
+              <span>+254720224464</span>
             </div>
-            <div className="mb-5">
-              <label
-                htmlFor="email"
-                className="mb-3 block text-base font-medium text-primary"
-              >
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="example@email.com"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base"
-                onChange={handleChange}
-                value={formValue.email || ""}
-              />
+            <div className="flex items-center gap-3">
+              <MapPin className="text-primary" />
+              <span>Ndunduri, Nakuru, Kenya</span>
             </div>
-            <div className="mb-5">
-              <label
-                htmlFor="phone"
-                className="mb-3 block text-base font-medium text-primary"
-              >
-                Phone
-              </label>
-              <input
-                type="text"
-                name="phone"
-                id="phone"
-                placeholder="+1524528831"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base"
-                onChange={handleChange}
-                value={formValue.phone || ""}
-              />
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="block rounded-md bg-green-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-green-700"
-              >
-                Submit
-              </button>
-            </div>
+          </div>
+        </div>
+
+        {/* Right Side - Contact Form */}
+        <div>
+          <h2 className="text-2xl font-bold mb-4">Send a Message</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="firstname"
+              placeholder="First Name"
+              className="w-full px-4 py-2 rounded-md bg-slate-50 border border-gray-700 focus:ring focus:ring-primary"
+              onChange={handleChange}
+              value={formValue.firstname}
+            />
+            <textarea
+              type="text"
+              name="lastname"
+              placeholder="Message ..."
+              rows={4}
+              className="w-full px-4 py-2 rounded-md bg-slate-50 border border-gray-700 focus:ring focus:ring-primary"
+              onChange={handleChange}
+              value={formValue.lastname}
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="w-full px-4 py-2 rounded-md bg-slate-50 border border-gray-700 focus:ring focus:ring-primary"
+              onChange={handleChange}
+              value={formValue.email}
+            />
+            <input
+              type="text"
+              name="phone"
+              placeholder="Phone Number"
+              className="w-full px-4 py-2 rounded-md bg-slate-50 border border-gray-700 focus:ring focus:ring-primary"
+              onChange={handleChange}
+              value={formValue.phone}
+            />
+            <button
+              type="submit"
+              className="w-full flex items-center justify-center bg-primary hover:bg-primary text-white py-2 rounded-md font-medium"
+              disabled={loading}
+            >
+              {loading ? <Loader2 className="animate-spin" /> : "Send Message"}
+            </button>
           </form>
           {submitted && (
-            <div className="bg-green-600 text-white p-2 my-4 rounded-md">
-              Form submitted successfully!
+            <div className="mt-4 p-3 text-center bg-green-100 text-green-700 border border-green-500 rounded-md">
+              Your message has been sent successfully!
             </div>
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

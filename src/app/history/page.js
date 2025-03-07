@@ -50,7 +50,7 @@ export default function HistoryPage() {
               >
                 <h2 className="text-2xl font-semibold mb-2">{event.year}</h2>
               </div>
-              <div className="md:w-1/2 flex justify-center">
+              <div className="md:w-1/4 hidden  md:flex justify-center">
                 <div className="relative w-40 h-40">
                   <Image
                     src={imageSrc}
@@ -62,7 +62,7 @@ export default function HistoryPage() {
                 </div>
               </div>
               <div
-                className={`md:w-1/4 text-start ${
+                className={`md:w-1/2 text-start ${
                   index % 2 === 0 ? "md:pl-4" : "md:pr-4"
                 }`}
               >
