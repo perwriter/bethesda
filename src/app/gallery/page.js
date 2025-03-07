@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { queryGallery } from "@/app/services/index";
 
 const Gallery = () => {
-  const [data, setData] = useState([]); // Initialize data as an empty array
+  const [data, setData] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch the gallery data when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,75 +37,97 @@ const Gallery = () => {
   };
 
   const goToPrevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      (prevIndex - 1 + data.length) % data.length
-    );
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
   };
 
   return (
-    <div className=" container mx-auto px-4 pt-6 gallery grid grid-cols-2 sm:grid-cols-3 gap-4">
-      {data.map((item, index) => (
-        <div
-          key={index}
-          className="relative group cursor-pointer"
-          onClick={() => openModal(index)}
-        >
-          {/* Image */}
-          <img
-            src={item.image.url}
-            alt={item.title}
-            className="w-full h-60 object-cover"
-          />
-
-          {/* Title overlay on hover */}
-          <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex justify-center items-center text-white text-xl transition-opacity">
-            {item.title}
-          </div>
-        </div>
-      ))}
+    <div>
+    <div className="container mx-auto px-4 pt-10">
+     <h1 className=" text-2xl md:text-5xl font-semibold pb-4 text-center "> Our Gallery</h1>
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {data.map((item, index) => (
+          <motion.div
+            key={index}
+            className="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg"
+            whileHover={{ scale: 1.05 }}
+            onClick={() => openModal(index)}
+          >
+            <Image
+              src={item.image.url}
+              alt={item.title}
+              width={500}
+              height={500}
+              className="w-full h-64 object-cover transition-transform duration-300 ease-in-out"
+            />
+            <motion.div
+              className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-lg opacity-0 group-hover:opacity-100 transition-opacity"
+              initial={{ opacity: 0 }}
+              whileHover={{ opacity: 1 }}
+            >
+              {item.title}
+            </motion.div>
+          </motion.div>
+        ))}
+      </motion.div>
 
       {/* Modal */}
-      {isModalOpen && currentImageIndex !== null && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="relative w-4/5 h-4/5">
-            {/* Image */}
-            <div className="relative w-full h-full rounded-lg">
-              <img
+      <AnimatePresence>
+        {isModalOpen && currentImageIndex !== null && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="relative w-11/12 md:w-3/4 lg:w-1/2"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Image
                 src={data[currentImageIndex].image.url}
                 alt={data[currentImageIndex].title}
-                className="w-full h-full  object-contain"
+                width={800}
+                height={600}
+                className="w-full h-auto rounded-lg shadow-lg object-contain"
               />
-
-              {/* Title Overlay */}
-              <div className="absolute top-0 left-0 w-full p-4 bg-purple-800 bg-opacity-76 text-white text-center text-2xl">
+              <motion.div
+                className="absolute top-0 left-0 w-full p-4 bg-purple-700 text-white text-center text-xl"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
                 {data[currentImageIndex].title}
-              </div>
-            </div>
+              </motion.div>
 
-            {/* Close button */}
-            <button
-              className="absolute top-4 right-4 text-white text-2xl"
-              onClick={closeModal}
-            >
-              &times;
-            </button>
-
-            {/* Next and Previous buttons */}
-            <button
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
-              onClick={goToPrevImage}
-            >
-              &#8249;
-            </button>
-            <button
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
-              onClick={goToNextImage}
-            >
-              &#8250;
-            </button>
-          </div>
-        </div>
-      )}
+              {/* Close Button */}
+              <button className="absolute top-4 right-4 text-white text-3xl" onClick={closeModal}>
+                &times;
+              </button>
+              {/* Navigation Buttons */}
+              <button
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
+                onClick={goToPrevImage}
+              >
+                &#8249;
+              </button>
+              <button
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
+                onClick={goToNextImage}
+              >
+                &#8250;
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
     </div>
   );
 };

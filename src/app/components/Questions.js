@@ -10,7 +10,7 @@ export default function Faq({ data }) {
   return (
     <>
       {data && (
-        <div className=" container mx-auto px-4 my-8">
+        <div className=" container mx-auto px-4 max-w-4xl my-8">
           <h2 className="text-center block my-8 text-3xl font-bold">
             Frequent Questions
           </h2>

@@ -56,7 +56,7 @@ export default function Banner({ data = [] }) {
           <div className="absolute inset-0 bg-black/50"></div>
           <div className="relative z-10 text-center px-6 sm:px-10">
             <motion.h2
-              className="text-3xl font-bold sm:text-5xl"
+              className="text-3xl font-bold max-w-4xl sm:text-5xl"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}

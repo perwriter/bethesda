@@ -6,7 +6,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: " Website",
+  title: "Website",
   description: "A demo website.",
 };
 
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="">
+        <div className="pt-20">
           <Navbar />
           {children}
           <Footer />

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const NavItem = ({ href, children, isPrimary, onClick }) => (
@@ -11,7 +12,7 @@ const NavItem = ({ href, children, isPrimary, onClick }) => (
           ? "bg-primary text-white hover:bg-primary"
           : "text-black hover:bg-primary"
       }`}
-      onClick={onClick} // Attach the onClick handler here
+      onClick={onClick}
     >
       {children}
     </Link>
@@ -24,7 +25,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50); // Add shadow when scrolling past 50px
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -41,20 +42,18 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed w-full z-40 transition-shadow ${
-        isScrolled
-          ? "shadow-xl shadow-white bg-white"
-          : " bg-zinc-200/80  "
+      className={`fixed w-full top-0 z-40 transition-shadow ${
+        isScrolled ? "shadow-xl shadow-white bg-white" : "bg-zinc-200/80"
       }`}
     >
       <div className="px-8 mx-auto flex h-20 w-full items-center">
-        <a className="block text-primary" href="/">
-          <img src="../logo1.png" className="w-24 h-auto" alt="logo" />
-        </a>
+        <Link href="/">
+          <Image src="/logo1.png" width={96} height={40} alt="logo" className="w-24 h-auto" />
+        </Link>
 
         <div className="flex flex-1 items-center justify-end md:justify-end">
           <nav aria-label="Global" className="hidden md:block">
-            <ul className="flex items-center gap-6 text-lg font-bold">
+            <ul className="flex items-center gap-6 text-white text-lg font-bold">
               <NavItem href="/">Home</NavItem>
               <NavItem href="/donation">Donation</NavItem>
               <NavItem href="/history">History</NavItem>
@@ -78,23 +77,15 @@ export default function Navbar() {
               stroke="currentColor"
               strokeWidth="2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="fixed inset-0 bg-white z-50 flex flex-col justify-center items-center md:hidden h-3/4">
-          <button
-            className="absolute top-4 right-4 text-gray-600"
-            onClick={toggleMenu}
-          >
+          <button className="absolute top-4 right-4 text-gray-600" onClick={toggleMenu}>
             &times;
           </button>
           <ul className="flex flex-col items-center gap-6 text-lg">

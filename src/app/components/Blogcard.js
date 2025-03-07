@@ -14,8 +14,8 @@ export default function blogCard({
         <Image
           alt="Office"
           src={thumbnailImage}
-          width="300"
-          height="300"
+          width="500"
+          height="500"
           className="w-full object-cover"
         />
         <div className="p-4 sm:p-6">
