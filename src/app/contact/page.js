@@ -39,7 +39,10 @@ export default function Contact() {
         {/* Left Side - Contact Info */}
         <div>
           <h2 className="text-3xl font-bold mb-4">Get in Touch</h2>
-          <p className="mb-6">Have questions? We're here to help. Reach out to our team for support or inquiries.</p>
+          <p className="mb-6">
+            Have questions? We&apos;re here to help. Reach out to our team for
+            support or inquiries.
+          </p>
           <div className="space-y-8">
             <div className="flex items-center gap-3">
               <Mail className="text-primary" />
