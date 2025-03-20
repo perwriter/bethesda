@@ -86,9 +86,19 @@ export const getSingleBlog = async (slug) => {
 
 export const submitContactForm = async (formValue) => {
   const mutationQuery = gql`
-    mutation CreateContact($firstname: String!, $lastname: String!, $email: String!, $phone: Float!) {
+    mutation CreateContact(
+      $firstname: String!
+      $lastname: String!
+      $email: String!
+      $phone: Float!
+    ) {
       createContact(
-        data: { firstname: $firstname, lastname: $lastname, email: $email, phone: $phone }
+        data: {
+          firstname: $firstname
+          lastname: $lastname
+          email: $email
+          phone: $phone
+        }
       ) {
         id
       }
@@ -96,7 +106,7 @@ export const submitContactForm = async (formValue) => {
   `;
 
   // Remove non-numeric characters from the phone number and convert to float
-  const sanitizedPhone = parseFloat(formValue.phone.replace(/\D/g, ''));
+  const sanitizedPhone = parseFloat(formValue.phone.replace(/\D/g, ""));
 
   const variables = {
     firstname: formValue.firstname,
@@ -133,6 +143,37 @@ export const queryHistories = async () => {
         }
         year
         description
+      }
+    }
+  `;
+  const response = await graphQLClient.request(query);
+  return response;
+};
+
+// privacy policy page
+export const queryPrivacies = async () => {
+  const query = gql`
+    query MyQuery {
+      privacies {
+        heading
+        privacy {
+          html
+        }
+      }
+    }
+  `;
+  const response = await graphQLClient.request(query);
+  return response;
+};
+// privacy policy page
+export const queryTerms = async () => {
+  const query = gql`
+    query MyQuery {
+      terms {
+        heading
+        description {
+          html
+        }
       }
     }
   `;

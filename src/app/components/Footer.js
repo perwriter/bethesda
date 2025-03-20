@@ -33,7 +33,7 @@ export default function Footer() {
                 <li key={name}>
                   <Link
                     href={href}
-                    className="text-gray-700 hover:text-blue-600 transition-colors duration-300 text-sm font-medium"
+                    className="text-gray-700 hover:text-purple-600 transition-colors duration-300 text-sm font-medium"
                   >
                     {name}
                   </Link>
@@ -49,15 +49,24 @@ export default function Footer() {
             </p>
             <p className="text-sm text-gray-700">
               <strong>Email:</strong>{" "}
-              <Link href="mailto:bethesdachildcarekenya@gmail.com" className="hover:text-blue-600">
+              <Link
+                href="mailto:bethesdachildcarekenya@gmail.com"
+                className="hover:text-purple-600"
+              >
                 bethesdachildcarekenya@gmail.com
               </Link>
             </p>
             <p className="text-sm text-gray-700">
-              <strong>Contact:</strong> <Link href="tel:+254720224464" className="hover:text-blue-600">+254720224464</Link>
+              <strong>Contact:</strong>{" "}
+              <Link href="tel:+254720224464" className="hover:text-purple-600">
+                +254720224464
+              </Link>
             </p>
             <p className="text-sm text-gray-700">
-              <strong>Contact:</strong> <Link href="tel:+254721201092" className="hover:text-blue-600">+254721201092</Link>
+              <strong>Contact:</strong>{" "}
+              <Link href="tel:+254721201092" className="hover:text-purple-600">
+                +254721201092
+              </Link>
             </p>
           </div>
 
@@ -69,25 +78,25 @@ export default function Footer() {
                   name: "Facebook",
                   href: "#",
                   icon: <FaFacebookF />,
-                  color: "hover:text-blue-700",
+                  color: "hover:text-blue-700", // Keep original color
                 },
                 {
                   name: "YouTube",
                   href: "#",
                   icon: <FaYoutube />,
-                  color: "hover:text-red-600",
+                  color: "hover:text-red-600", // Keep original color
                 },
                 {
                   name: "Twitter",
                   href: "#",
                   icon: <FaTwitter />,
-                  color: "hover:text-blue-400",
+                  color: "hover:text-blue-400", // Keep original color
                 },
                 {
                   name: "Instagram",
                   href: "#",
                   icon: <FaInstagram />,
-                  color: "hover:text-pink-500",
+                  color: "hover:text-pink-500", // Keep original color
                 },
               ].map(({ name, href, icon, color }) => (
                 <li key={name}>
@@ -106,10 +115,29 @@ export default function Footer() {
         </div>
 
         {/* Footer Bottom Content */}
-        <div className="mt-8 border-t border-gray-300 pt-4 text-center">
-          <p className="text-sm text-gray-500">
-            Copyright &copy; {new Date().getFullYear()}. All rights reserved.
-          </p>
+        <div className="mt-8 border-t border-gray-300 pt-6">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Links Row */}
+            <div className="flex flex-wrap justify-between space-x-6">
+              <Link href="/terms" className="text-gray-600 hover:text-purple-600 text-sm">
+                Terms
+              </Link>
+              <Link href="/privacy" className="text-gray-600 hover:text-purple-600 text-sm">
+                Privacy
+              </Link>
+              <Link href="/our-sponsors" className="text-gray-600 hover:text-purple-600 text-sm">
+                Our Sponsors
+              </Link>
+              <Link href="/disclaimer" className="text-gray-600 hover:text-purple-600 text-sm">
+                Disclaimer
+              </Link>
+            </div>
+
+            {/* Copyright Text */}
+            <p className="text-sm text-gray-500 text-center">
+              Copyright &copy; {new Date().getFullYear()}. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
