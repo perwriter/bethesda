@@ -3,7 +3,6 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Banner({ data = [] }) {
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
@@ -33,7 +32,9 @@ export default function Banner({ data = [] }) {
   };
 
   const goToPrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? data.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? data.length - 1 : prevIndex - 1
+    );
   };
   if (!data.length) return null; // Ensure data is available before rendering
 
@@ -46,7 +47,7 @@ export default function Banner({ data = [] }) {
       <AnimatePresence>
         <motion.div
           key={currentIndex}
-          className="absolute w-full h-full bg-cover bg-center flex items-center justify-center text-white"
+          className="absolute w-full h-full bg-fit md:bg-cover bg-center flex items-center justify-center text-white"
           style={{ backgroundImage: `url(${data[currentIndex]?.image?.url})` }}
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
