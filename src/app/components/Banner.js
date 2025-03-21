@@ -47,7 +47,7 @@ export default function Banner({ data = [] }) {
       <AnimatePresence>
         <motion.div
           key={currentIndex}
-          className="absolute w-full h-full bg-fit md:bg-cover bg-center flex items-center justify-center text-white"
+          className="absolute w-full h-full bg-cover bg-center flex items-center justify-center text-white"
           style={{ backgroundImage: `url(${data[currentIndex]?.image?.url})` }}
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
