@@ -165,13 +165,46 @@ export const queryPrivacies = async () => {
   const response = await graphQLClient.request(query);
   return response;
 };
-// privacy policy page
+// disclaimer page
+export const queryDisclaimers = async () => {
+  const query = gql`
+    query MyQuery {
+      disclaimers {
+        heading
+        description {
+          html
+        }
+      }
+    }
+  `;
+  const response = await graphQLClient.request(query);
+  return response;
+};
+// privacy terms page
 export const queryTerms = async () => {
   const query = gql`
     query MyQuery {
       terms {
         heading
         description {
+          html
+        }
+      }
+    }
+  `;
+  const response = await graphQLClient.request(query);
+  return response;
+};
+// privacy Sponsors page
+export const querySponsors = async () => {
+  const query = gql`
+    query MyQuery {
+      sponsors {
+        title
+        sponsorImage {
+          url
+        }
+        story {
           html
         }
       }
