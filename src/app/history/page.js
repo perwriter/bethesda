@@ -4,85 +4,58 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { queryHistories } from "@/app/services/index";
 
-export default function HistoryPage() {
-  const [timelineData, setTimelineData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default async function HistoryPage() {
+  const data = await queryHistories()
+  const histories = data.histories || []
 
-  useEffect(() => {
-    const fetchHistories = async () => {
-      try {
-        const response = await queryHistories();
-        setTimelineData(response.histories);
-      } catch (error) {
-        console.error("Error fetching histories:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchHistories();
-  }, []);
-
-  useEffect(() => {
-    if (timelineData.length > 0) {
-      const interval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % timelineData.length);
-      }, 8000); // Change slide every 5 seconds
-      return () => clearInterval(interval);
-    }
-  }, [timelineData]);
-
-  if (loading)
-    return <p className="min-h-screen text-center text-xl">Loading...</p>;
+  // Sort histories by year
+  const sortedHistories = [...histories].sort((a, b) => Number.parseInt(a.year) - Number.parseInt(b.year))
 
   return (
-    <div className=" flex flex-col min-h-screen justify-center items-center bg-gray-50">
-      <h1 className="text-5xl font-bold text-center mb-8">Our History</h1>
-      <div className="flex justify-center space-x-4 mb-8">
-        {timelineData.map((event, index) => (
-          <button
-            key={index}
-            className={`px-4 py-2 rounded-lg ${
-              currentIndex === index ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-            onClick={() => setCurrentIndex(index)}
-          >
-            {event.year}
-          </button>
-        ))}
-      </div>
-      <div className="w-full max-w-screen-lg mx-auto p-4">
-        {timelineData.map((event, index) => (
-          <div
-            key={index}
-            className={`flex flex-col md:flex-col items-center justify-center space-y-6 md:space-y-0 md:space-x-12 transition-opacity duration-500 ${
-              currentIndex === index ? "opacity-100" : "opacity-0 absolute"
-            }`}
-          >
-            <h2 className="text-3xl md:text-4xl font-semibold mb-2">{event.year}</h2>
+    <div className="pt-16">
+     
 
-            {/* Image Section */}
-            <div className="relative w-64 h-64 md:w-96 md:h-96 flex-shrink-0">
-              <Image
-                src={event.image?.url || "/logo1.png"}
-                alt={`Event in ${event.year}`}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-
-            {/* Text Section */}
-            <div className="max-w-3xl text-center md:text-center">
-              <h2 className="text-3xl font-semibold mb-2">{event.year}</h2>
-              <h3 className="text-xl font-semibold text-gray-700 mb-4">
-                {event.title}
-              </h3>
-              <p className="text-lg text-gray-600">{event.description}</p>
-            </div>
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          {/* Decorative element */}
+          <div className="flex justify-center mb-12">
+            <div className="w-24 h-1 bg-purple-gradient rounded-full"></div>
           </div>
-        ))}
+
+          <div className="timeline-container">
+            {sortedHistories.map((history, index) => (
+              <div key={index} className="timeline-item">
+                <div className="timeline-year">{history.year}</div>
+                <div className="bg-card shadow-lg rounded-lg p-6 card-hover-effect">
+                  <p className="text-lg leading-relaxed">{history.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* If no history items are available */}
+          {sortedHistories.length === 0 && (
+            <div className="text-center p-8 bg-muted rounded-lg">
+              <p>Our history timeline is currently being updated. Please check back soon.</p>
+            </div>
+          )}
+
+          {/* Decorative element at the end */}
+          <div className="flex justify-center mt-12">
+            <div className="w-24 h-1 bg-purple-gradient rounded-full"></div>
+          </div>
+
+          {/* Additional content */}
+          <div className="mt-16 text-center">
+            <h2 className="text-2xl font-bold mb-4">Our Mission Continues</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              As we look to the future, we remain committed to providing exceptional childcare services and creating a
+              nurturing environment where every child can thrive.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
-  );
+  )
 }
+
