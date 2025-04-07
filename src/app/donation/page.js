@@ -32,8 +32,8 @@ export default function DonationPage() {
           <Image src="/m-pesa.png" alt="Mpesa" width={128} height={128} className="mx-auto mb-4" />
           <h2 className="text-2xl font-semibold mb-4">Donate via Mpesa</h2>
           <p className="mb-4">You can send your donation via Mpesa to our Paybill number:</p>
-          <div className="text-lg font-bold mb-2">Paybill: 123456</div>
-          <div className="text-lg font-bold">Account: DONATE</div>
+          <div className="text-lg font-bold mb-2">Paybill: 542542</div>
+          <div className="text-lg font-bold">Account: 02777</div>
         </div>
 
         {/* I&M Bank Donation */}
@@ -42,8 +42,8 @@ export default function DonationPage() {
           <h2 className="text-2xl font-semibold mb-4">Donate via I&M Bank</h2>
           <p className="mb-4">You can deposit directly into our I&M Bank account. Here are the details:</p>
           <div className="text-lg font-bold mb-2">Bank: I&M Bank</div>
-          <div className="text-lg font-bold mb-2">Account Name: Bethesda</div>
-          <div className="text-lg font-bold">Account Number: 123456789</div>
+          <div className="text-lg font-bold mb-2">Account Name: Bethesda Child Care</div>
+          <div className="text-lg font-bold">Account Number: 01801354091410</div>
         </div>
       </div>
     </div>
