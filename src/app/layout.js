@@ -88,11 +88,11 @@ export default function RootLayout({ children }) {
         </script>
       </head>
       <body className={inter.className}>
-        {/* <div className="pt-20 min-h-screen"> */}
+        <div className="pt-20 min-h-screen">
         <div className="min-h-screen">
-          {/* <Navbar /> */}
+          <Navbar />
           {children}
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </body>
     </html>
