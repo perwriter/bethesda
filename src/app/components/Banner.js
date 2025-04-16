@@ -40,7 +40,7 @@ export default function Banner({ data = [] }) {
 
   return (
     <section
-      className="relative w-full  h-screen overflow-hidden"
+      className="relative w-full mt-10 h-screen overflow-hidden"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
