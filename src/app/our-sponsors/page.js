@@ -1,76 +1,63 @@
-"use client";
-import { useEffect, useState } from "react";
-import { querySponsors } from "@/app/services/index"; // Import querySponsors function
-import Image from "next/image";
-import { ArrowRight } from "lucide-react"; // Assuming you're using Lucide icons
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Handshake } from "lucide-react";
 
-export default function Sponsors() {
-  const [sponsorsData, setSponsorsData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export const metadata = {
+    title: 'Our Partners & Sponsors | Bethesda Childcare',
+    description: 'We are deeply grateful to our sponsors and partners whose generous contributions make our work possible.',
+};
 
-  useEffect(() => {
-    const fetchSponsors = async () => {
-      try {
-        const response = await querySponsors(); // Call function to fetch sponsors
-        setSponsorsData(response.sponsors);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+const partners = [
+    "TRI-OIL COMPANY, U.S.A",
+    "BARAKA ROSES, KENYA",
+    "COMPLY INDUSTRIES, KENYA",
+    // etc can be represented by a placeholder or removed
+];
 
-    fetchSponsors();
-  }, []);
+export default function PartnersPage() {
+    return (
+        <div className="py-16 md:py-24 bg-gradient-to-br from-purple-50 via-white to-purple-50 dark:from-purple-950/20 dark:via-background dark:to-purple-950/20">
+            <div className="container">
+                <section className="text-center">
+                    <h1 className="font-headline text-4xl font-bold tracking-tight md:text-5xl">Recognition of Our Partners and Sponsors</h1>
+                    <p className="mx-auto mt-4 max-w-3xl text-lg text-foreground/80">
+                        We are deeply grateful to our sponsors and partners whose generous contributions make our work at Bethesda Child Care Centre possible. Their unwavering support enables us to provide a safe, loving home, quality education, and essential care to the vulnerable children who rely on us. Together, we are transforming lives and building brighter futures.
+                    </p>
+                </section>
 
-  if (loading) return <p className="min-h-screen">Loading...</p>;
-  if (error) return <p className="min-h-screen">Error: {error}</p>;
+                <section className="mt-16 max-w-4xl mx-auto space-y-12">
+                    <Card className="shadow-lg">
+                        <CardHeader>
+                            <CardTitle className="font-headline text-2xl">A Special Thanks</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-foreground/80">
+                                Special thanks to Sister Sharna for her instrumental role in the early days of Bethesda. Her belief in our mission and her generous financial support laid the foundation for the vision that is now a reality. Though her direct support has paused, the impact of her contributions continues to resonate, helping us grow into the thriving organization we are today.
+                            </p>
+                        </CardContent>
+                    </Card>
 
-  return (
-    <div className="container min-h-screen mx-auto p-6">
-      <h1 className="text-3xl text-center font-bold mb-8">Our Sponsors</h1>
-
-      {/* Introductory Text Section */}
-      <div className="mb-12 max-w-3xl mx-auto text-center">
-        <h2 className="text-2xl font-semibold mb-4">
-          Champions of Change: The Stories Behind Our Financial Sponsors
-        </h2>
-        <p className="text-gray-600">
-          Behind every great initiative, there are people who believe in its
-          impact and invest in its future. Here are four inspiring individuals
-          who have played a key role in supporting our mission:
-        </p>
-      </div>
-
-      {/* Sponsors List */}
-      {sponsorsData?.map((sponsor, index) => (
-        <div
-          key={index}
-          className="grid md:grid-cols-2 gap-8 items-center mb-12"
-        >
-          <div className="relative">
-            <div className="absolute top-0 left-0 w-full h-full bg-purple-200 rounded-[30px] transform rotate-3"></div>
-            <div className="relative z-10 rounded-[30px] overflow-hidden border-8 border-white shadow-lg">
-              <Image
-                src={sponsor.sponsorImage.url}
-                alt={sponsor.title}
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover"
-              />
+                    <Card className="shadow-lg">
+                        <CardHeader>
+                            <CardTitle className="font-headline text-2xl">Our Valued Partners</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="mb-6 text-foreground/80">We also extend our heartfelt appreciation to the following partners whose ongoing commitment empowers the children at Bethesda Child Care Centre:</p>
+                            <ul className="space-y-4">
+                                {partners.map((partner, index) => (
+                                    <li key={index} className="flex items-center gap-3 bg-secondary/50 p-4 rounded-lg">
+                                        <Handshake className="h-6 w-6 text-primary"/>
+                                        <span className="font-semibold text-lg">{partner}</span>
+                                    </li>
+                                ))}
+                                <li className="flex items-center gap-3 bg-secondary/50 p-4 rounded-lg">
+                                    <Handshake className="h-6 w-6 text-primary"/>
+                                    <span className="font-semibold text-lg">And many other anonymous donors...</span>
+                                </li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </section>
             </div>
-          </div>
-          <div className="space-y-6">
-            <h2 className="text-2xl font-semibold">{sponsor.title}</h2>
-            <div
-              className="text-gray-600"
-              dangerouslySetInnerHTML={{ __html: sponsor.story.html }}
-            />
-            
-          </div>
         </div>
-      ))}
-    </div>
-  );
+    );
 }
