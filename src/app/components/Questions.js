@@ -72,24 +72,23 @@ export default function Faq() {
 
   return (
     <div className="container mx-auto px-4 max-w-4xl my-8">
-      <h2 className="text-center block my-8 text-3xl font-bold">
-        Frequent Questions
+      <h2 className="text-center my-8 text-3xl font-bold">
+        Frequently Asked Questions
       </h2>
       <div className="grid grid-cols-1 gap-4">
-        {faqData.map((question, index) => (
+        {faqData.map((item, index) => (
           <div
             key={index}
             className="rounded-lg bg-gray-100 p-4 cursor-pointer"
             onClick={() => toggleAnswer(index)}
           >
-            <div className="rounded-lg font-bold text-lg flex justify-between items-center">
-              <span>Q: {question.question}</span>
+            <div className="flex justify-between items-center font-bold text-lg">
+              <span>Q: {item.question}</span>
               <span>{activeIndex === index ? '-' : '+'}</span>
             </div>
-
             {activeIndex === index && (
               <p className="mt-2 text-gray-800 whitespace-pre-line">
-                <strong>A: </strong>{question.answer}
+                <strong>A: </strong>{item.answer}
               </p>
             )}
           </div>
